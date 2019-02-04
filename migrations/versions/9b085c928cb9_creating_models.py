@@ -1,8 +1,8 @@
 """Creating models
 
-Revision ID: c764b98987b9
+Revision ID: 9b085c928cb9
 Revises: 
-Create Date: 2019-02-03 02:16:10.689731
+Create Date: 2019-02-03 15:21:52.718049
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c764b98987b9'
+revision = '9b085c928cb9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -60,17 +60,17 @@ def upgrade():
     sa.PrimaryKeyConstraint('crn')
     )
     op.create_table('enroll',
-    sa.Column('sid', sa.Integer(), nullable=False),
+    sa.Column('eid', sa.Integer(), nullable=False),
+    sa.Column('sid', sa.Integer(), nullable=True),
     sa.Column('term', sa.String(length=2), nullable=True),
     sa.Column('year', sa.Integer(), nullable=True),
     sa.Column('crn', sa.Integer(), nullable=True),
     sa.Column('grade', sa.String(length=2), nullable=True),
-    sa.Column('student_sid', sa.String(length=40), nullable=True),
+    sa.Column('student_sid', sa.Integer(), nullable=True),
     sa.Column('section_tyc', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['section_tyc'], ['section.crn'], ),
-    sa.ForeignKeyConstraint(['student_sid'], ['student.email'], ),
-    sa.PrimaryKeyConstraint('sid'),
-    sa.UniqueConstraint('term')
+    sa.ForeignKeyConstraint(['student_sid'], ['student.sid'], ),
+    sa.PrimaryKeyConstraint('eid')
     )
     # ### end Alembic commands ###
 

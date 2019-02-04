@@ -52,12 +52,13 @@ class Section(db.Model):
 
 
 class Enroll(db.Model):
-    sid = db.Column(db.Integer,primary_key=True)
-    term = db.Column(db.String(2),db.CheckConstraint('term in (FA,SP,SU)'),unique=True)
+    eid = db.Column(db.Integer,db.Sequence('enroll_eid_seq'),db.CheckConstraint('eid > 999 and eid<10000'),primary_key=True)
+    sid = db.Column(db.Integer)
+    term = db.Column(db.String(2),db.CheckConstraint('term in (FA,SP,SU)'))
     year = db.Column(db.Integer)
     crn = db.Column(db.Integer)
     grade = db.Column(db.String(2),db.CheckConstraint('grade in (A,B,C,D,F,I,IP,S,U)'))
-    student_sid = db.Column(db.String(40),db.ForeignKey('student.email'))
+    student_sid = db.Column(db.Integer,db.ForeignKey('student.sid'))
     section_tyc = db.Column(db.Integer,db.ForeignKey('section.crn'))
 
     def __repr__(self):
